@@ -1,4 +1,3 @@
-import React from "react";
 import Snowfall from "./components/Snowfall";
 import ChristmasLights from "./components/ChristmasLights";
 import Countdown from "./components/Countdown";

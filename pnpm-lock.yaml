@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@react-three/drei':
         specifier: 9.96.1
-        version: 9.96.1(@react-three/fiber@8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(@types/react@19.2.7)(@types/three@0.181.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
+        version: 9.96.1(@react-three/fiber@8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(@types/react@18.3.27)(@types/three@0.181.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
       '@react-three/fiber':
         specifier: 8.15.14
-        version: 8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
+        version: 8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
       framer-motion:
         specifier: 10.18.0
         version: 10.18.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -36,6 +36,12 @@ importers:
       '@types/node':
         specifier: ^22.14.0
         version: 22.19.2
+      '@types/react':
+        specifier: ^18.3.27
+        version: 18.3.27
+      '@types/react-dom':
+        specifier: ^18.3.7
+        version: 18.3.7(@types/react@18.3.27)
       '@vitejs/plugin-react':
         specifier: ^5.0.0
         version: 5.1.2(vite@6.4.1(@types/node@22.19.2))
@@ -534,6 +540,14 @@ packages:
   '@types/offscreencanvas@2019.7.3':
     resolution: {integrity: sha512-ieXiYmgSRXUDeOntE1InxjWyvEelZGP63M+cGuquuRLuIKKT1osnkXjxev9B7d1nXSug5vpunx+gNlbVxMlC9A==}
 
+  '@types/prop-types@15.7.15':
+    resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
+
+  '@types/react-dom@18.3.7':
+    resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
+    peerDependencies:
+      '@types/react': ^18.0.0
+
   '@types/react-reconciler@0.26.7':
     resolution: {integrity: sha512-mBDYl8x+oyPX/VBb3E638N0B7xG+SPk/EAMcVPeexqus/5aTpTphQi0curhhshOqRrc9t6OPoJfEUkbymse/lQ==}
 
@@ -541,6 +555,9 @@ packages:
     resolution: {integrity: sha512-HHM3nxyUZ3zAylX8ZEyrDNd2XZOnQ0D5XfunJF5FLQnZbHHYq4UWvW1QfelQNXv1ICNkwYhfxjwfnqivYB6bFg==}
     peerDependencies:
       '@types/react': '*'
+
+  '@types/react@18.3.27':
+    resolution: {integrity: sha512-cisd7gxkzjBKU2GgdYrTdtQx1SORymWyaAFhaxQPK9bYO9ot3Y5OikQRvY0VYQtvwjeQnizCINJAenh/V7MK2w==}
 
   '@types/react@19.2.7':
     resolution: {integrity: sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==}
@@ -1246,24 +1263,24 @@ snapshots:
       '@react-spring/types': 9.6.1
       react: 18.2.0
 
-  '@react-spring/three@9.6.1(@react-three/fiber@8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(react@18.2.0)(three@0.160.0)':
+  '@react-spring/three@9.6.1(@react-three/fiber@8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(react@18.2.0)(three@0.160.0)':
     dependencies:
       '@react-spring/animated': 9.6.1(react@18.2.0)
       '@react-spring/core': 9.6.1(react@18.2.0)
       '@react-spring/shared': 9.6.1(react@18.2.0)
       '@react-spring/types': 9.6.1
-      '@react-three/fiber': 8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
+      '@react-three/fiber': 8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
       react: 18.2.0
       three: 0.160.0
 
   '@react-spring/types@9.6.1': {}
 
-  '@react-three/drei@9.96.1(@react-three/fiber@8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(@types/react@19.2.7)(@types/three@0.181.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)':
+  '@react-three/drei@9.96.1(@react-three/fiber@8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(@types/react@18.3.27)(@types/three@0.181.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@mediapipe/tasks-vision': 0.10.8
-      '@react-spring/three': 9.6.1(@react-three/fiber@8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(react@18.2.0)(three@0.160.0)
-      '@react-three/fiber': 8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
+      '@react-spring/three': 9.6.1(@react-three/fiber@8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0))(react@18.2.0)(three@0.160.0)
+      '@react-three/fiber': 8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)
       '@use-gesture/react': 10.3.1(react@18.2.0)
       camera-controls: 2.10.1(three@0.160.0)
       cross-env: 7.0.3
@@ -1284,7 +1301,7 @@ snapshots:
       three-mesh-bvh: 0.7.6(three@0.160.0)
       three-stdlib: 2.36.1(three@0.160.0)
       troika-three-text: 0.47.2(three@0.160.0)
-      tunnel-rat: 0.1.2(@types/react@19.2.7)(react@18.2.0)
+      tunnel-rat: 0.1.2(@types/react@18.3.27)(react@18.2.0)
       utility-types: 3.11.0
       uuid: 9.0.1
       zustand: 3.7.2(react@18.2.0)
@@ -1295,14 +1312,14 @@ snapshots:
       - '@types/three'
       - immer
 
-  '@react-three/fiber@8.15.14(@types/react@19.2.7)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)':
+  '@react-three/fiber@8.15.14(@types/react@18.3.27)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(three@0.160.0)':
     dependencies:
       '@babel/runtime': 7.28.4
       '@types/react-reconciler': 0.26.7
       '@types/webxr': 0.5.24
       base64-js: 1.5.1
       buffer: 6.0.3
-      its-fine: 1.2.5(@types/react@19.2.7)(react@18.2.0)
+      its-fine: 1.2.5(@types/react@18.3.27)(react@18.2.0)
       react: 18.2.0
       react-reconciler: 0.27.0(react@18.2.0)
       react-use-measure: 2.1.7(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1416,13 +1433,24 @@ snapshots:
 
   '@types/offscreencanvas@2019.7.3': {}
 
+  '@types/prop-types@15.7.15': {}
+
+  '@types/react-dom@18.3.7(@types/react@18.3.27)':
+    dependencies:
+      '@types/react': 18.3.27
+
   '@types/react-reconciler@0.26.7':
     dependencies:
       '@types/react': 19.2.7
 
-  '@types/react-reconciler@0.28.9(@types/react@19.2.7)':
+  '@types/react-reconciler@0.28.9(@types/react@18.3.27)':
     dependencies:
-      '@types/react': 19.2.7
+      '@types/react': 18.3.27
+
+  '@types/react@18.3.27':
+    dependencies:
+      '@types/prop-types': 15.7.15
+      csstype: 3.2.3
 
   '@types/react@19.2.7':
     dependencies:
@@ -1574,9 +1602,9 @@ snapshots:
 
   isexe@2.0.0: {}
 
-  its-fine@1.2.5(@types/react@19.2.7)(react@18.2.0):
+  its-fine@1.2.5(@types/react@18.3.27)(react@18.2.0):
     dependencies:
-      '@types/react-reconciler': 0.28.9(@types/react@19.2.7)
+      '@types/react-reconciler': 0.28.9(@types/react@18.3.27)
       react: 18.2.0
     transitivePeerDependencies:
       - '@types/react'
@@ -1773,9 +1801,9 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tunnel-rat@0.1.2(@types/react@19.2.7)(react@18.2.0):
+  tunnel-rat@0.1.2(@types/react@18.3.27)(react@18.2.0):
     dependencies:
-      zustand: 4.5.7(@types/react@19.2.7)(react@18.2.0)
+      zustand: 4.5.7(@types/react@18.3.27)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -1825,9 +1853,9 @@ snapshots:
     optionalDependencies:
       react: 18.2.0
 
-  zustand@4.5.7(@types/react@19.2.7)(react@18.2.0):
+  zustand@4.5.7(@types/react@18.3.27)(react@18.2.0):
     dependencies:
       use-sync-external-store: 1.6.0(react@18.2.0)
     optionalDependencies:
-      '@types/react': 19.2.7
+      '@types/react': 18.3.27
       react: 18.2.0
