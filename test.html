@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Send Email</title>
+</head>
+
+<body>
+  <h2>Send Email</h2>
+
+  <input id="to" placeholder="收件人邮箱"><br><br>
+  <input id="subject" placeholder="标题"><br><br>
+  <textarea id="content" placeholder="内容"></textarea><br><br>
+
+  <button onclick="sendMail()">发送邮件</button>
+
+  <script>
+    async function sendMail() {
+      const to = document.getElementById("to").value;
+      const subject = document.getElementById("subject").value;
+      const content = document.getElementById("content").value;
+
+      const resp = await fetch("https://sendmail.ptsfdtz.top/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          to,
+          subject,
+          html: `<p>${content}</p>`
+        })
+      });
+
+      const result = await resp.text();
+      alert("发送结果：\n" + result);
+    }
+  </script>
+</body>
+</html>

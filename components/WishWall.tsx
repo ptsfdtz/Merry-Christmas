@@ -41,19 +41,24 @@ const WishWall: React.FC = () => {
     };
 
     try {
-      // Attempt POST to /api/send-email (user should provide server endpoint)
-      const res = await fetch("/api/send-email", {
+      // POST to the user's sendmail endpoint (as in test.html)
+      const endpoint = "https://sendmail.ptsfdtz.top/";
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ to, message: body }),
+        body: JSON.stringify({
+          to,
+          subject: "Holiday Wishes from Merry-Christmas",
+          html: `<p>${String(body).replace(/\n/g, "<br/>")}</p>`,
+        }),
       });
 
       if (res.ok) {
-        setStatus("Email sent successfully.");
+        setStatus("Email sent successfully via your endpoint.");
         addSent(newWish);
       } else {
-        // fallback to mailto if backend not available
-        throw new Error("Server response not OK");
+        // fallback to mailto if endpoint not available
+        throw new Error("Endpoint response not OK");
       }
     } catch (err) {
       // Fallback: open user's mail client with prefilled message
