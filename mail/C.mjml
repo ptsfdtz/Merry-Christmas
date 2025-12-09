@@ -1,0 +1,33 @@
+<mjml>
+  <mj-head>
+    <mj-title>Vintage Christmas Letter</mj-title>
+
+    <mj-style inline="inline">
+      .old-paper { background-size: cover; border-radius: 14px; border: 3px
+      solid #8b5a2b; padding: 30px; } .ink { font-family: "Georgia, serif";
+      color: #4a3b2a; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body background-color="#e7e0d4">
+    <mj-section padding="40px 0">
+      <mj-column width="600px" css-class="old-paper">
+        <mj-text align="center" font-size="34px" color="#8b0000">
+          🎄 Christmas Wishes 🎄
+        </mj-text>
+
+        <mj-text css-class="ink" font-size="18px">
+          This season, may your heart be warm and your days be bright.
+        </mj-text>
+
+        <mj-text css-class="ink" font-size="18px">
+          May love surround you like candlelight in winter’s gentle night.
+        </mj-text>
+
+        <mj-text align="right" css-class="ink" font-style="italic">
+          — With warmest wishes
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

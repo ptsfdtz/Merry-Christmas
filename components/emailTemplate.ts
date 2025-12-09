@@ -1,0 +1,153 @@
+const escapeHtml = (input: string) =>
+  input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+export const buildEmailHtml = (message: string, senderName?: string) => {
+  const safeMessage = escapeHtml(message || "").replace(/\n/g, "<br/>");
+  const safeSender = escapeHtml(senderName || "Your Friend");
+
+  return `<!doctype html>
+<html lang="und" dir="auto" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+  <title>Christmas Card</title>
+  <!--[if !mso]><!-->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!--<![endif]-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    #outlook a {
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+
+  </style>
+  <!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]-->
+  <!--[if lte mso 11]>
+    <style type="text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]-->
+  <style type="text/css">
+    @media only screen and (min-width:480px) {
+      .mj-column-px-600 {
+        width: 600px !important;
+        max-width: 600px;
+      }
+    }
+
+  </style>
+  <style media="screen and (min-width:480px)">
+    .moz-text-html .mj-column-px-600 {
+      width: 600px !important;
+      max-width: 600px;
+    }
+
+  </style>
+</head>
+
+<body style="word-spacing:normal;background-color:#f8f2e8;">
+  <div aria-label="Christmas Card" aria-roledescription="email" class="card-bg" style="background-color:#f8f2e8;" role="article" lang="und" dir="auto">
+    <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+        <tbody>
+          <tr>
+            <td style="direction:ltr;font-size:0px;padding:40px 0;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="card-front-outlook" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-px-600 mj-outlook-group-fix card-front" style="background-color: #ffffffee; border-radius: 20px; border: 3px solid #b30000; box-shadow: 0px 0px 25px rgba(0,0,0,0.2); padding: 32px; font-size: 0px; text-align: left; direction: ltr; display: inline-block; vertical-align: top; width: 100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                  <tbody>
+                    <!-- 金色标题 -->
+                    <tr>
+                      <td align="center" class="gold" style="color: #d4a017; text-shadow: 0 1px 2px rgba(0,0,0,0.2); font-weight: bold; font-size: 0px; padding: 10px 25px; word-break: break-word;">
+                        <div style="font-family:Georgia, serif;font-size:36px;line-height:1.5;text-align:center;color:#000000;">🎄 Merry Christmas 🎄</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <p style="border-top:solid 2px #d4a017;font-size:1px;margin:0px auto;width:60%;">
+                        </p>
+                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:solid 2px #d4a017;font-size:1px;margin:0px auto;width:330px;" role="presentation" width="330px" ><tr><td style="height:0;line-height:0;"> &nbsp;
+</td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                    <!-- 用户填写的正文 -->
+                    <tr>
+                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                        <div style="font-family:Georgia, serif;font-size:20px;line-height:1.5;text-align:center;color:#333333;">${safeMessage}</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-size:0px;word-break:break-word;">
+                        <div style="height:12px;line-height:12px;">&#8202;</div>
+                      </td>
+                    </tr>
+                    <!-- 手写签名 -->
+                    <tr>
+                      <td align="center" class="handwriting" style="font-family: 'Brush Script MT',
+      cursive; color: #8b0000; font-size: 0px; padding: 10px 25px; word-break: break-word;">
+                        <div style="font-family:Georgia, serif;font-size:13px;line-height:1.5;text-align:center;color:#000000;">With love,<br>${safeSender} 🎁</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-size:0px;word-break:break-word;">
+                        <div style="height:20px;line-height:20px;">&#8202;</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+  </div>
+</body>
+</html>
+`;
+};

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Send, Trash2, Sparkles } from "lucide-react";
 import { Wish } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
+import { buildEmailHtml } from "./emailTemplate";
 
 // Brighter, neon-like sticky colors for dark mode
 const STICKY_COLORS = [
@@ -17,6 +18,7 @@ const WishWall: React.FC = () => {
   const [sent, setSent] = useState<Wish[]>([]);
   const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
+  const [sender, setSender] = useState("");
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -41,6 +43,7 @@ const WishWall: React.FC = () => {
     };
 
     try {
+      const html = buildEmailHtml(body, sender || "Your Friend");
       // POST to the user's sendmail endpoint (as in test.html)
       const endpoint = "https://sendmail.ptsfdtz.top/";
       const res = await fetch(endpoint, {
@@ -49,7 +52,9 @@ const WishWall: React.FC = () => {
         body: JSON.stringify({
           to,
           subject: "Holiday Wishes from Merry-Christmas",
-          html: `<p>${String(body).replace(/\n/g, "<br/>")}</p>`,
+          html,
+          // include from/name if the endpoint supports custom From
+          from: sender ? `${sender} <no-reply@yourdomain.com>` : undefined,
         }),
       });
 
@@ -109,7 +114,7 @@ const WishWall: React.FC = () => {
           </h2>
           <p className="text-gray-300 text-lg flex items-center justify-center gap-2">
             <Sparkles className="w-4 h-4 text-yellow-400" />
-            Leave a warm message for the world
+            Send your best wishes to friends and family!
             <Sparkles className="w-4 h-4 text-yellow-400" />
           </p>
         </div>
@@ -125,6 +130,19 @@ const WishWall: React.FC = () => {
           <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-red-500/20 rounded-full blur-3xl"></div>
 
           <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+            <div>
+              <label className="block text-xs font-bold text-green-300 uppercase tracking-wider mb-2">
+                Send by
+              </label>
+              <input
+                type="text"
+                value={sender}
+                onChange={(e) => setSender(e.target.value)}
+                placeholder="Your Name"
+                maxLength={40}
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all text-white placeholder-white/30"
+              />
+            </div>
             <div>
               <label className="block text-xs font-bold text-green-300 uppercase tracking-wider mb-2">
                 Recipient Email

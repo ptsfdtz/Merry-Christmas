@@ -101,7 +101,7 @@ function App() {
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse delay-150"></div>
           </div>
           <p className="text-sm opacity-50 font-light tracking-wider">
-            &copy; {new Date().getFullYear()} Winter Wonderland Experience.
+            &copy; {new Date().getFullYear()} PTSFDTZ. All rights reserved.
           </p>
         </div>
       </footer>

@@ -1,0 +1,32 @@
+<mjml>
+  <mj-head>
+    <mj-title>Cute Christmas Card</mj-title>
+    <mj-attributes>
+      <mj-text font-family="Comic Sans MS, cursive" line-height="1.5" />
+    </mj-attributes>
+
+    <mj-style inline="inline">
+      .cute-card { background: #ffffff; border-radius: 24px; border: 3px dashed
+      #ff6f91; padding: 30px; box-shadow: 0 0 20px rgba(255,182,193,0.4); }
+      background-size: cover; }
+    </mj-style>
+  </mj-head>
+
+  <mj-body css-class="pink-bg" background-color="#ffe6ef">
+    <mj-section padding="40px 0">
+      <mj-column width="600px" css-class="cute-card">
+        <mj-text align="center" font-size="32px" color="#ff6f91">
+          🎀 Merry Christmas 🎀
+        </mj-text>
+
+        <mj-text align="center" font-size="18px" color="#444">
+          Sending warm wishes wrapped in joy and sprinkled with love!
+        </mj-text>
+
+        <mj-text align="center" color="#ff6f91" font-size="20px">
+          💗 You are special. Stay happy! 💗
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
