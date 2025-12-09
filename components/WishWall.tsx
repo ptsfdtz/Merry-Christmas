@@ -13,40 +13,83 @@ const STICKY_COLORS = [
 ];
 
 const WishWall: React.FC = () => {
-  const [wishes, setWishes] = useState<Wish[]>([]);
-  const [name, setName] = useState("");
+  // Sent items displayed in-session (not persisted long-term)
+  const [sent, setSent] = useState<Wish[]>([]);
+  const [recipient, setRecipient] = useState("");
   const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const savedWishes = localStorage.getItem("christmas-wishes");
-    if (savedWishes) {
-      setWishes(JSON.parse(savedWishes));
-    }
-  }, []);
+  const addSent = (item: Wish) => {
+    setSent((s) => [item, ...s]);
+  };
 
-  useEffect(() => {
-    localStorage.setItem("christmas-wishes", JSON.stringify(wishes));
-  }, [wishes]);
+  const validateEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || !message.trim()) return;
-
+  // Try sending via a backend API; if that fails, fallback to opening mailto: link
+  const sendEmail = async (to: string, body: string) => {
+    setLoading(true);
+    setStatus(null);
     const newWish: Wish = {
       id: Date.now().toString(),
-      name: name.trim(),
-      message: message.trim(),
+      name: to,
+      message: body,
       color: STICKY_COLORS[Math.floor(Math.random() * STICKY_COLORS.length)],
       rotation: Math.random() * 10 - 5,
     };
 
-    setWishes([newWish, ...wishes]);
-    setName("");
+    try {
+      // Attempt POST to /api/send-email (user should provide server endpoint)
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ to, message: body }),
+      });
+
+      if (res.ok) {
+        setStatus("Email sent successfully.");
+        addSent(newWish);
+      } else {
+        // fallback to mailto if backend not available
+        throw new Error("Server response not OK");
+      }
+    } catch (err) {
+      // Fallback: open user's mail client with prefilled message
+      const mailto = `mailto:${encodeURIComponent(
+        to
+      )}?subject=${encodeURIComponent(
+        "Holiday Wishes"
+      )}&body=${encodeURIComponent(body)}`;
+      try {
+        window.location.href = mailto;
+        setStatus("Opened mail client as fallback. Please send manually.");
+        addSent(newWish);
+      } catch (e) {
+        setStatus(
+          "Failed to send email. No backend available and mailto fallback blocked."
+        );
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!recipient.trim() || !message.trim())
+      return setStatus("Please fill in recipient and message.");
+    if (!validateEmail(recipient.trim()))
+      return setStatus("Please enter a valid email address.");
+
+    sendEmail(recipient.trim(), message.trim());
+    setRecipient("");
     setMessage("");
   };
 
   const deleteWish = (id: string) => {
-    setWishes(wishes.filter((w) => w.id !== id));
+    setSent((s) => s.filter((w) => w.id !== id));
   };
 
   return (
@@ -79,27 +122,27 @@ const WishWall: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
             <div>
               <label className="block text-xs font-bold text-green-300 uppercase tracking-wider mb-2">
-                Your Name
+                Recipient Email
               </label>
               <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Santa Claus"
-                maxLength={20}
+                type="email"
+                value={recipient}
+                onChange={(e) => setRecipient(e.target.value)}
+                placeholder="friend@example.com"
+                maxLength={100}
                 className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all text-white placeholder-white/30"
               />
             </div>
             <div>
               <label className="block text-xs font-bold text-green-300 uppercase tracking-wider mb-2">
-                Your Wish
+                Message
               </label>
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Peace on Earth..."
-                maxLength={100}
-                rows={3}
+                placeholder="Wishing you joy and peace this holiday season..."
+                maxLength={500}
+                rows={4}
                 className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none transition-all text-white placeholder-white/30 resize-none"
               />
             </div>
@@ -116,7 +159,7 @@ const WishWall: React.FC = () => {
         {/* Grid of Wishes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
           <AnimatePresence>
-            {wishes.map((wish) => (
+            {sent.map((wish) => (
               <motion.div
                 key={wish.id}
                 layout
@@ -150,9 +193,9 @@ const WishWall: React.FC = () => {
           </AnimatePresence>
         </div>
 
-        {wishes.length === 0 && (
+        {sent.length === 0 && (
           <div className="text-center text-white/30 mt-10">
-            No wishes yet. Be the first to light up the wall!
+            No sent messages yet. Send a blessing!
           </div>
         )}
       </div>
