@@ -3,6 +3,8 @@ import { Send, Trash2, Sparkles } from "lucide-react";
 import { Wish } from "../types";
 import { motion, AnimatePresence } from "framer-motion";
 import { buildEmailHtml } from "./emailTemplate";
+import { useAuth } from "../hooks/useAuth";
+import { emailAPI } from "../api/client";
 
 // Brighter, neon-like sticky colors for dark mode
 const STICKY_COLORS = [
@@ -21,6 +23,8 @@ const WishWall: React.FC = () => {
   const [sender, setSender] = useState("");
   const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  
+  const { getToken } = useAuth();
 
   const addSent = (item: Wish) => {
     setSent((s) => [item, ...s]);
@@ -44,26 +48,17 @@ const WishWall: React.FC = () => {
 
     try {
       const html = buildEmailHtml(body, sender || "Your Friend");
-      // POST to the user's sendmail endpoint (as in test.html)
-      const endpoint = "https://sendmail.ptsfdtz.top/";
-      const res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to,
-          subject: "Holiday Wishes from Merry-Christmas",
-          html,
-          // include from/name if the endpoint supports custom From
-          from: sender ? `${sender} <no-reply@yourdomain.com>` : undefined,
-        }),
-      });
+      const token = getToken();
+      
+      // 使用 API 服务发送邮件
+      const result = await emailAPI.sendEmail(to, "Holiday Wishes from Merry-Christmas", html, token);
 
-      if (res.ok) {
-        setStatus("Email sent successfully via your endpoint.");
+      if (result.ok) {
+        setStatus("Email sent successfully! 🎄");
         addSent(newWish);
       } else {
         // fallback to mailto if endpoint not available
-        throw new Error("Endpoint response not OK");
+        throw new Error(result.error || "Send failed");
       }
     } catch (err) {
       // Fallback: open user's mail client with prefilled message
@@ -71,7 +66,7 @@ const WishWall: React.FC = () => {
         to
       )}?subject=${encodeURIComponent(
         "Holiday Wishes"
-      )}&body=${encodeURIComponent(body)}`;
+      )}&body=${encodeURIComponent(message)}`;
       try {
         window.location.href = mailto;
         setStatus("Opened mail client as fallback. Please send manually.");

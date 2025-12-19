@@ -4,18 +4,50 @@ import Countdown from "./components/Countdown";
 import Activities from "./components/Activities";
 import WishWall from "./components/WishWall";
 import Scene3D from "./components/Scene3D";
+import Login from "./components/Login";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useAuth } from "./hooks/useAuth";
+import { LogOut } from "lucide-react";
 
 function App() {
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, 200]);
   const y2 = useTransform(scrollY, [0, 500], [0, -100]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  
+  const { isAuthenticated, isLoading, login, logout } = useAuth();
+
+  const handleLogin = async (password: string) => {
+    const success = await login(password);
+    return success;
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-[#05100a]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Login onLogin={handleLogin} />;
+  }
 
   return (
     <div className="min-h-screen w-full relative bg-[#05100a] text-white overflow-hidden selection:bg-red-500 selection:text-white">
       <Snowfall />
       <ChristmasLights />
+
+      {/* Logout Button */}
+      <button
+        onClick={logout}
+        className="fixed top-6 right-6 z-50 glass-panel px-4 py-2 rounded-full flex items-center gap-2 hover:bg-white/20 transition-all duration-300 group"
+        title="Logout"
+      >
+        <LogOut className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+        <span className="text-sm font-medium">Logout</span>
+      </button>
 
       {/* Hero Section with 3D Background */}
       <header className="relative w-full h-screen min-h-[700px] flex flex-col items-center justify-center overflow-hidden">

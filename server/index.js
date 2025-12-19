@@ -5,8 +5,41 @@ const app = express();
 app.use(express.json());
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+const AUTH_PASSWORD = process.env.AUTH_PASSWORD || "christmas2025";
 
+// === 登录接口 ===
+app.post("/api/auth", async (req, res) => {
+  const { password } = req.body || {};
+  
+  if (!password) {
+    return res.status(400).json({ error: "Password required" });
+  }
+
+  if (password === AUTH_PASSWORD) {
+    return res.json({ 
+      success: true, 
+      token: btoa(`${Date.now()}:${password}`),
+      message: "Authentication successful"
+    });
+  } else {
+    return res.status(401).json({ success: false, error: "Invalid password" });
+  }
+});
+
+// === 邮件发送接口（需要认证） ===
 app.post("/api/send-email", async (req, res) => {
+  // 验证授权令牌
+  const authHeader = req.headers.authorization;
+  
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Unauthorized - missing token" });
+  }
+
+  const token = authHeader.substring(7);
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized - invalid token" });
+  }
+
   const { to, message } = req.body || {};
   if (!to || !message)
     return res.status(400).json({ error: "Missing to or message" });
