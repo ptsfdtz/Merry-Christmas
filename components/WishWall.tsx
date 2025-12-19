@@ -26,6 +26,26 @@ const WishWall: React.FC = () => {
   
   const { getToken } = useAuth();
 
+  // 从 localStorage 加载已发送的邮件
+  useEffect(() => {
+    const savedWishes = localStorage.getItem("sent_wishes");
+    if (savedWishes) {
+      try {
+        const wishes = JSON.parse(savedWishes);
+        setSent(wishes);
+      } catch (err) {
+        console.error("Failed to load saved wishes:", err);
+      }
+    }
+  }, []);
+
+  // 当 sent 改变时，保存到 localStorage
+  useEffect(() => {
+    if (sent.length > 0) {
+      localStorage.setItem("sent_wishes", JSON.stringify(sent));
+    }
+  }, [sent]);
+
   const addSent = (item: Wish) => {
     setSent((s) => [item, ...s]);
   };
@@ -94,7 +114,16 @@ const WishWall: React.FC = () => {
   };
 
   const deleteWish = (id: string) => {
-    setSent((s) => s.filter((w) => w.id !== id));
+    setSent((s) => {
+      const updated = s.filter((w) => w.id !== id);
+      // 删除后也要更新 localStorage
+      if (updated.length === 0) {
+        localStorage.removeItem("sent_wishes");
+      } else {
+        localStorage.setItem("sent_wishes", JSON.stringify(updated));
+      }
+      return updated;
+    });
   };
 
   return (
